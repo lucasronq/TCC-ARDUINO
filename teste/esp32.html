@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Monitor ESP32</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 30px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 { color: #333; }
+    .valor {
+      font-size: 2em;
+      color: #0078d7;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #0078d7;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Monitor de Dados ESP32</h2>
+    <p>Temperatura: <span class="valor" id="temp">--</span> °C</p>
+    <p>Umidade: <span class="valor" id="umid">--</span> %</p>
+    <p>Status: <span id="status">--</span></p>
+    <button onclick="obterDados()">Atualizar</button>
+  </div>
+
+  <script>
+    async function obterDados() {
+      try {
+        // 👉 coloque o IP do ESP32 aqui
+        const resposta = await fetch('http://192.168.100.76/dados');
+        const dados = await resposta.json();
+
+        // Atualiza os elementos da página
+        document.getElementById('temp').textContent = dados.temperatura;
+        document.getElementById('umid').textContent = dados.umidade;
+        document.getElementById('status').textContent = dados.status;
+      } catch (erro) {
+        console.error("Erro ao obter dados:", erro);
+        document.getElementById('status').textContent = "Erro de conexão";
+      }
+    }
+
+    // Atualiza automaticamente a cada 5 segundos
+    setInterval(obterDados, 5000);
+  </script>
+</body>
+</html>
