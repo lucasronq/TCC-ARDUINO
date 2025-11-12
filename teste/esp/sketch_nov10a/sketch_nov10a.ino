@@ -15,7 +15,7 @@ void setup() {
 
   server.on("/dados", []() {
     StaticJsonDocument<200> doc;
-    doc["temperatura"] = 23.5;
+    doc["temperatura"] = 223.5;
     doc["umidade"] = 18;
     doc["status"] = "ok";
 
