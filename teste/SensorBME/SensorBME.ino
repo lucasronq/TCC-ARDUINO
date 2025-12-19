@@ -41,13 +41,13 @@ void setup() {
     delay(500);
     Serial.print(".");
   }
-  Serial.println("\n✅ Conectado ao Wi-Fi!");
+  Serial.println("\n Conectado ao Wi-Fi!");
   Serial.print("IP local: ");
   Serial.println(WiFi.localIP());
 
   Wire.begin(SDA_PIN, SCL_PIN);
   if (!bme.begin(BME280_ADDRESS)) {
-    Serial.println("❌ Erro: BME280 não detectado!");
+    Serial.println("Erro: BME280 não detectado!");
     while (1);
   }
 
